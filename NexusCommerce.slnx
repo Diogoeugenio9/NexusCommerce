@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="NexusCommerce.Inventory.API/NexusCommerce.Inventory.API.csproj" />
+  <Project Path="NexusCommerce.Orders.API/NexusCommerce.Orders.API.csproj" />
+</Solution>
