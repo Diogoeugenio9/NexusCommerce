@@ -30,6 +30,14 @@ public class ProductsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var products = await _context.Products.ToListAsync();
+
+        return Ok(products);
+    }
+
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
