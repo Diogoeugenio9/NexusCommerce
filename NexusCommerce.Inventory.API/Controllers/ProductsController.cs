@@ -42,10 +42,42 @@ public class ProductsController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var product = await _context.Products         
+        var product = await _context.Products
             .FirstOrDefaultAsync(p => p.Id == id);
 
         return product is null ? NotFound() : Ok(product);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, UpdateProductRequest request)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (product == null)
+            return NotFound();
+
+        product.Name = request.Name;
+        product.Price = request.Price;
+        product.StockQuantity = request.StockQuantity;
+
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+        if (product == null)
+            return NotFound();
+
+        _context.Products.Remove(product);
+
+        await _context.SaveChangesAsync();
+        return NoContent();
     }
 
 }
